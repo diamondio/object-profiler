@@ -46,7 +46,7 @@ exports.wrapFunction = function (name, fn, self) {
 
 exports.wrapObject = function (name, methods, object) {
   methods.forEach(function (method) {
-    exports.wrapFunction(name + '.' + method, object[method], object);
+    object[method] = exports.wrapFunction(name + '.' + method, object[method], object);
   })
 }
 
