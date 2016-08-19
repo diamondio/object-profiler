@@ -1,0 +1,19 @@
+{
+  "name": "object-profiler",
+  "version": "1.0.0",
+  "description": "Wraps custom object methods to see which methods are eating up the most time",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diamondio/object-profiler.git"
+  },
+  "author": "Diamond Inc.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diamondio/object-profiler/issues"
+  },
+  "homepage": "https://github.com/diamondio/object-profiler#readme"
+}
