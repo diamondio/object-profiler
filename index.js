@@ -51,18 +51,31 @@ exports.wrapObject = function (name, methods, object) {
 }
 
 exports.explain = function () {
-  Object.keys(functionStats).forEach(function (key) {
-    var stat = functionStats[key];
+  var stats = Object.keys(functionStats).map(key => functionStats[key]);
+  var getTotalTime = function (stat) {
+    var t = 0;
+    stat.timeIntervals.forEach(function (interval) {
+      t += interval.end - interval.start;
+    });
+    return t;
+  }
+
+  stats.forEach(function (stat) {
+    stat.totalTime = getTotalTime(stat);
+  })
+
+  stats.sort(function (stata, statb) {
+    return statb.totalTime - stata.totalTime;
+  })
+
+  stats.forEach(function (stat) {
     if (stat.numCalls === 0) {
       console.log(`${stat.name} was never called.\n`);
       return;
     }
-    var totalTime = 0;
+    var totalTime = stat.totalTime;
     var stints = stat.timeIntervals.length;
-    stat.timeIntervals.forEach(function (interval) {
-      totalTime += interval.end - interval.start;
-    });
-    console.log(`${stat.name}:\n${totalTime.toFixed(2)}ms of runtime\n${stints} stints\n${stat.numCalls} calls\n${(totalTime/stat.numCalls).toFixed(2)}ms per call on average`);
+    console.log(`${stat.name}:\n${totalTime.toFixed(2)}ms of runtime\n${stints} stints\n${stat.numCalls} calls\n${(totalTime/stat.numCalls).toFixed(2)}ms per call on average\n`);
   });
 }
 
